@@ -41,10 +41,10 @@
     <script>
 
         $(document).ready(function () {
-                get_post()
+                getPost()
             })
-
-        function get_post() {
+            // postId 로 지목된 db의 post 가져와서 폼에 뿌려줌
+        function getPost() {
                 // $("#postlist").empty()
                 // console.log(category)
 
@@ -55,21 +55,18 @@
                 
                 $.ajax({
                     type: "GET",
-                    url: `/api/modify?postId=${postId}`,
+                    url: `/api/find-one-post?postId=${postId}`,
                     data: {},
                     success: function (response) {
                         let post = response["post"]
-
                         console.log(post)
                         
-
                         let author = post['author']
                         let password = post['password']
                         let title = post['title']
                         let description = post['description']
                         
                         $('#author').val(author)
-                        // $('#password').val(password)
                         $('#title').val(title)
                         $('#description').val(description)
                     }
@@ -82,10 +79,10 @@
                 // 이제 안다!!! 주소에 저장 해 둔 postId값 가져와서 특정화 시킨다!!!
                 let searchParams = new URLSearchParams(window.location.search)
                 let postId = searchParams.get('postId')
-
+                
                 $.ajax({
                     type: "POST",
-                    url: `/api/modify?postId=${postId}`,
+                    url: `/api/update-post?postId=${postId}`, // modify 와 update. 무엇이 더 적절한 이름일까?
                     data: {
                         title:$('#title').val(),
                         description:$('#description').val(),
@@ -98,7 +95,7 @@
                         } else {
                             alert(response["result"])
                         }
-                        window.location.href = '/';
+                        window.location.href = '/'
                     }
                 })
             }
@@ -111,7 +108,7 @@
 
                 $.ajax({
                     type: "DELETE",
-                    url: `api/modify/${postId}`, // api/detail/:postId ${postId}
+                    url: `api/delete-post/${postId}`, // api/detail/:postId ${postId}
                     data: {password:$('#password').val(),},
                     success: function(response) {
                         if (response["result"] == "success") {
@@ -147,7 +144,7 @@
         <textarea id="description" class="textarea desc" placeholder="내용" rows="10"></textarea>
       </div>
     <div class="post">
-        <button onclick="modifyPost()" class="button is-primary">수정완료</button>
+        <button onclick="modifyPost()" class="button is-primary">수정하기</button>
     </div>
     <div class="post">
         <button onclick="deletePost()" class="button is-primary">삭제하기</button>

@@ -2,8 +2,6 @@
 <html lang="ko">
 
     <head>
-        <!-- Webpage Title -->
-
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma-rtl.min.css">
         
         <title>첫 화면</title>
@@ -18,46 +16,43 @@
               crossorigin="anonymous">
 
         <!-- JS -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-                crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
 
-        <!-- 구글폰트 -->
-        <!-- <link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet"> -->
-
-        <script type="text/javascript">
-
+        <script>
             $(document).ready(function () {
-                get_post()
-                // $("#categorySelect").on("change", function () {
-                //     get_goods($(this).val())
-                // })
+                loadPost()
             })
 
-
-            function get_post(category) {
-                $("#postlist").empty()
-                console.log(category)
+            // 포스트 가져오기 api : load-post
+            function loadPost(posts) {
+                // $("#postlist").empty()
+                console.log(posts) // 언디
                 $.ajax({
                     type: "GET",
-                    url: `/api/post`,
+                    url: `/api/load-post`,
                     data: {},
                     success: function (response) {
                         let post = response["post"]
-                        for (let i = 0; i < post.length; i++) {
-                            make_card(post[i])
-
+                        console.log(post)
+                        for ( let i = 0; i < post.length; i++ ) {
+                            makeCard(post[i])
                         }
                     }
                 })
             }
 
-            function make_card(item) {
-                let htmlTemp = `<tr onclick="window.location='/detail?postId=${item['postId']}';">
-                                    <a href="/detail"><td scope="col">${item["title"]}</td></a>
-                                    <td scope="col">${item["author"]}</td>
-                                    <td scope="col">${item["date"]}</td>
+        //findeOne-post
+        ///detail?postId=${item['postId']}
+        ///findeOne-post?postId=${post['postId']}
+            function makeCard(post) {
+                                                            //findeOne-post
+                let htmlTemp = `<tr onclick="window.location='detail?postId=${post['postId']}';">
+                                    <a href="/detail"><td scope="col">${post["title"]}</td></a>
+                                    <td scope="col">${post["author"]}</td>
+                                    <td scope="col">${post["date"]}</td>
                                 </tr>`
                 $("#postlist").append(htmlTemp)
             }
@@ -65,11 +60,10 @@
             function makePost() {
                 // 버튼 눌렀을때 new 페이지로 이동... 어떻게?
                 window.location.href = '/new'
-
             }
 
         </script>
-            
+
         <style type="text/css">
             * {
                 font-family: "Do Hyeon", sans-serif;

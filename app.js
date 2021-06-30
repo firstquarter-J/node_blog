@@ -9,8 +9,8 @@ app.use(express.urlencoded({ extended: false })) // 동기? 비동기? 순서가
 app.use(express.json()) // json 가져오는 express 사용법?
 app.use(express.static('public')) // statuc 폴더 경로 명시?
 
-const postRouter = require("./routers/post")//라우터를 생성한다. goods.js파일을 라우터로 사용한다.
-app.use("/api", [postRouter]);//api를 호출해서 get등의 방식으로 데이터를 리턴한다
+const postRouter = require("./routers/post") //라우터를 생성한다. goods.js파일을 라우터로 사용한다.
+app.use("/api", [postRouter]) //api를 호출해서 get등의 방식으로 데이터를 리턴한다
 
 // ejs 사용한다?
 app.set('views', __dirname + '/views') // 경로 명시?
@@ -33,9 +33,7 @@ app.get('/new', (req, res) => {
 
   // 3. 게시글 조회 페이지
   //     - 제목, 작성자명, 작성 날짜, 작성 내용을 조회하기
-  
-
-app.get('/detail', (req, res) => {// localhost:5000/detail?goodsId=10의 형식으로 사용, id를 가져온다
+app.get('/detail', (req, res) => { // localhost:5000/detail?goodsId=10의 형식으로 사용, id를 가져온다
     let id = req.query.postId
     res.render('detail', {id}) // 
 })
@@ -50,6 +48,7 @@ app.get('/modify', (req, res) => {
     let id = req.query.postId
     res.render('modify', {id}) // 
 })
+
 
 app.listen(port, () => {
     console.log(`listening at http://localhost:${port}`)

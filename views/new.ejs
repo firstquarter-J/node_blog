@@ -38,10 +38,11 @@
     </style>
 
     <script>
+        // 포스트 저장하기 api : save-post
         function makePost() {
             $.ajax({
                 type: "POST",
-                url: "api/post",
+                url: "api/save-post",
                 data: {
                     title:$('#title').val(),
                     description:$('#description').val(),
@@ -52,7 +53,7 @@
                     if (response["result"] == "success") {
                         alert("작성 완료!")
                     }
-                    window.location.href = '/';
+                    window.location.href = '/'
                 }
             })
         }
