@@ -33,10 +33,7 @@
             })
 
             // ${category ? "?category=" + category : ""}
-            function getPost(category) {
-                $("#postlist").empty()
-                console.log(category)
-
+            function getPost(post) {
                 // url로 쿼리 값 보내서 받아와? 뭘 쓰는진 알고 쓰니?
                 // 이제 안다!!! 주소에 저장 해 둔 postId값 가져와서 특정화 시킨다!!!
                 let searchParams = new URLSearchParams(window.location.search)
@@ -44,16 +41,22 @@
                 
                 $.ajax({
                     type: "GET",
-                    url: `/api/find-one-post?postId=${postId}`, // detail
+                    url: `/api/detail/${postId}`, // detail ?postId=${postId} ${postId}
                     data: {},
+                    error: function(status, error) {
+                        if (status == 404) {
+                        alert("I Can Do This All Day");
+                        }
+                        // window.location.href="/"
+                    },
                     success: function (response) {
                         let post = response["post"]
-                        make_card(post)
+                        makeCard(post)
                     }
                 })
             }
 
-            function make_card(item) {
+            function makeCard(item) {
                 let htmlTemp = `<tr onclick="window.location='/detail?postId=${item['postId']}';">
                                     <a href="/detail"><td scope="col">${item["title"]}</td></a>
                                     <td scope="col">${item["author"]}</td>
@@ -63,15 +66,12 @@
             }
 
             function makePost() {
-                // 버튼 눌렀을때 new 페이지로 이동... 어떻게?
                 window.location.href = '/new'
-
             }
 
             function modifyPost() {
                 let searchParams = new URLSearchParams(window.location.search)
                 let postId = searchParams.get('postId')
-
                 window.location.href = `/modify?postId=${postId}` // 리다이랙트
             }
 
@@ -156,5 +156,4 @@
             </div>
         </div>
     </body>
-
 </html>

@@ -33,9 +33,10 @@ app.get('/new', (req, res) => {
 
   // 3. 게시글 조회 페이지
   //     - 제목, 작성자명, 작성 날짜, 작성 내용을 조회하기
-app.get('/detail', (req, res) => { // localhost:5000/detail?goodsId=10의 형식으로 사용, id를 가져온다
-    let id = req.query.postId
-    res.render('detail', {id}) // 
+app.get('/detail/:postId', (req, res) => { // localhost:5000/detail?goodsId=10의 형식으로 사용, id를 가져온다
+    // let id = req.query.postId
+    const { postId } = req.params
+    res.render('detail', {postId}) // 
 })
 
 // 4. 게시글 수정 페이지
@@ -46,9 +47,18 @@ app.get('/detail', (req, res) => { // localhost:5000/detail?goodsId=10의 형식
   //     - "삭제하기" 버튼을 누를 때 입력된 비밀번호를 비교하여 동일할 때만 글이 삭제되게 하기
 app.get('/modify', (req, res) => {
     let id = req.query.postId
-    res.render('modify', {id}) // 
+    res.render('modify', {id}) // , {id}
 })
 
+// 프론트
+// 함수 호출시에 쓸데없는 파라미터 넘기는 부분 지우기 OK
+// URL 포스트아이디 -> 전역변수로 쓰기 
+// * 커밋
+// 1. 비밀번호가 틀려서 삭제 수정이 되지 않았을 때 -> 리다이렉트 안되게
+// 2. 패스워드 칸 인풋타입 바꾸기
+// 3. 글 상세조회 페이지에서 작성날짜 보이게하기
+
+// 호스팅?어림없지
 
 app.listen(port, () => {
     console.log(`listening at http://localhost:${port}`)

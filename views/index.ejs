@@ -27,16 +27,13 @@
             })
 
             // 포스트 가져오기 api : load-post
-            function loadPost(posts) {
-                // $("#postlist").empty()
-                console.log(posts) // 언디
+            function loadPost() {
                 $.ajax({
                     type: "GET",
                     url: `/api/load-post`,
                     data: {},
                     success: function (response) {
                         let post = response["post"]
-                        console.log(post)
                         for ( let i = 0; i < post.length; i++ ) {
                             makeCard(post[i])
                         }
@@ -44,12 +41,9 @@
                 })
             }
 
-        //findeOne-post
-        ///detail?postId=${item['postId']}
-        ///findeOne-post?postId=${post['postId']}
-            function makeCard(post) {
-                                                            //findeOne-post
-                let htmlTemp = `<tr onclick="window.location='detail?postId=${post['postId']}';">
+            function makeCard(post) {                           //?postId=${post["postId"]}
+                                                            // /detail/${post["postId"]}
+                let htmlTemp = `<tr onclick="window.location='/detail/${post["postId"]}';">
                                     <a href="/detail"><td scope="col">${post["title"]}</td></a>
                                     <td scope="col">${post["author"]}</td>
                                     <td scope="col">${post["date"]}</td>

@@ -36,7 +36,6 @@
             margin-top: 20px;
         }
     </style>
-
     <script>
         // 포스트 저장하기 api : save-post
         function makePost() {
@@ -51,7 +50,7 @@
                 },
                 success: function (response) {
                     if (response["result"] == "success") {
-                        alert("작성 완료!")
+                        alert("작성 완료!") // 칭찬 필수
                     }
                     window.location.href = '/'
                 }
